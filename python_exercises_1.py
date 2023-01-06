@@ -20,7 +20,7 @@ hide_streamlit_style = """
     </style>"""
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-st.subheader("Блок Python 1. Задача 1")
+st.subheader("HW1. Блок Python. Задача 1")
 st.markdown(
     "- Создайте переменную **x** и присвойте ей значение равное 6\n"
     "- Создайте переменную **y** и присвойте ей значение равное 2.5\n"

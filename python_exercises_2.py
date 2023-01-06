@@ -7,7 +7,7 @@ hide_streamlit_style = """
     footer {visibility: hidden;}
     </style>"""
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-st.subheader("Блок Python 1. Задача 2")
+st.subheader("HW1. Блок Python. Задача 2")
 st.markdown(
     "- Создайте переменную **value** и присвойте ей список со значениями элементов с 1-го по 9-ый включительно \n"
     "- Создайте переменную **value_1** и присвойте ей элементы списка **value** с 1-го по 4-ый **индексы**\n"
