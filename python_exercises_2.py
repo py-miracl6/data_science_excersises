@@ -1,7 +1,12 @@
 import streamlit as st
 from streamlit_ace import st_ace
 
-
+hide_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    </style>"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 st.subheader("Блок Python 1. Задача 2")
 st.markdown(
     "- Создайте переменную **value** и присвойте ей список со значениями элементов с 1-го по 9-ый включительно \n"

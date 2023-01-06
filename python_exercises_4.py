@@ -1,7 +1,12 @@
 import streamlit as st
 from streamlit_ace import st_ace
 
-
+hide_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    </style>"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 st.subheader("Блок Python 1. Задача 4")
 st.markdown(
     "- Создайте переменную **value** и присвойте ей словарь с тремя различными типами ключей и их значений.\n"
