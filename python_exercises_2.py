@@ -43,7 +43,7 @@ content = st_ace(
 )
 
 if content:
-    st.subheader("Answer")
+    st.markdown("### Результат")
     value_check = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     value_1_check = value_check[1:4]
     value_2_check = value_check[-1]
@@ -56,28 +56,29 @@ if content:
         st.write(s.getvalue())
         # exec(content, globals(), loc)
         try:
-            value, value_1, value_2, value_3, value_4 = (
-                loc["value"],
-                loc["value_1"],
-                loc["value_2"],
-                loc["value_3"],
-                loc["value_4"],
-            )
-            if not isinstance(value, list):
-                st.error(f"Проверьте, что в переменной value список")
-            elif value != value_check:
-                st.error(f"Проверьте значение в переменной value")
-            elif value_1 != value_1_check:
-                st.error(f"Проверьте значение в переменной value_1")
-            elif value_2 != value_2_check:
-                st.error(f"Проверьте значение в переменной value_2")
-            elif value_3 != value_3_check:
-                st.error(f"Проверьте значение в переменной value_3")
-            elif value_4 != value_4_check:
-                st.error(f"Проверьте значение в переменной value_4")
-            else:
-                st.success("Все верно! Ключ = 15")
+            # value
+            assert 'value' in loc.keys(), "Проверьте название переменной value"
+            value = loc["value"]
+            assert isinstance(value, list), "Проверьте, что в переменной value список"
+            assert value == value_check, "Проверьте значение в переменной value"
+            # value_1
+            assert 'value_1' in loc.keys(), "Проверьте название переменной value_1"
+            value_1 = loc["value_1"]
+            assert value_1 == value_1_check, "Проверьте значение в переменной value_1"
+            # value_2
+            assert 'value_2' in loc.keys(), "Проверьте название переменной value_2"
+            value_2 = loc["value_2"]
+            assert value_2 == value_2_check, "Проверьте значение в переменной value_2"
+            # value_3
+            assert 'value_3' in loc.keys(), "Проверьте название переменной value_3"
+            value_3 = loc["value_3"]
+            assert value_3 == value_3_check, "Проверьте значение в переменной value_3"
+            # value_4
+            assert 'value_4' in loc.keys(), "Проверьте название переменной value_4"
+            value_4 = loc["value_4"]
+            assert value_4 == value_4_check, "Проверьте значение в переменной value_4"
+            st.success("Все верно! Ключ = 15")
         except Exception as ex:
-            st.error(f"Проверьте названия переменных {ex}")
+            st.error(ex)
     except Exception as ex:
         st.error(ex)

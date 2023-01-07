@@ -40,7 +40,7 @@ content = st_ace(
 )
 
 if content:
-    st.subheader("Answer")
+    st.subheader("Результат")
     value_check = {1: [1, 3], "key": (1, 2, 4), 2: "строка"}
 
     try:

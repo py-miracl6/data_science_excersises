@@ -40,7 +40,7 @@ content = st_ace(
 )
 
 if content:
-    st.subheader("Answer")
+    st.subheader("Результат")
     value_check = [1, 2, 3]
     value_check_append = value_check.copy()
     value_check_append.append("это строка")
@@ -51,18 +51,13 @@ if content:
         st.write(s.getvalue())
         # exec(content, globals(), loc)
         try:
+            assert 'value' in loc.keys(), "Проверьте название переменной value"
             value = loc["value"]
-            if not isinstance(value, list):
-                st.error(f"Проверьте, что в переменной value список")
-            elif len(value[:-1]) != len(value_check):
-                st.error(f"Проверьте кол-во значений в переменной value")
-            elif value[-1] != value_check_append[-1]:
-                st.error(
-                    f"Проверьте, что вы добавили в список элемент со значением 'это строка'"
-                )
-            else:
-                st.success("Все верно! Ключ = 68")
+            assert isinstance(value, list), "Проверьте, что в переменной value список"
+            assert len(value[:-1]) == len(value_check), "Проверьте кол-во значений в переменной value"
+            assert value[-1] == value_check_append[-1], "Проверьте, что вы добавили в список элемент со значением 'это строка'"
+            st.success("Все верно! Ключ = 68")
         except Exception as ex:
-            st.error(f"Проверьте названия переменных {ex}")
+            st.error(ex)
     except Exception as ex:
         st.error(ex)

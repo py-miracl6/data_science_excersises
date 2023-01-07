@@ -43,7 +43,8 @@ content = st_ace(
 )
 
 if content:
-    st.subheader("Answer")
+    st.markdown("### Результат")
+    # st.subheader("Результат")
     try:
         with stdoutIO() as s:
             exec(content, globals(), loc)
