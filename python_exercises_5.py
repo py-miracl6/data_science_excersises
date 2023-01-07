@@ -78,8 +78,8 @@ if content:
                 ), "Проблемы с try-except, в блоке except ничего не нужно возвращать"
                 st.success("Все верно! Ключ = 99")
             except Exception as ex:
-                st.error("Добавьте исключение try-except")
+                st.error(ex)
         except Exception as ex:
-            st.error(f"{ex}")
+            st.error(ex)
     except Exception as ex:
         st.error(ex)
