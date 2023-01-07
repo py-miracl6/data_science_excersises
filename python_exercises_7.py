@@ -28,15 +28,15 @@ st.markdown(
     "- Обязательно скопируйте итоговый код, так как он пригодится в следующем задании\n"
     "- Определите класс **Number**, в котором определите свойства:\n"
     "   - Динамическую переменную **value_lst** - это список с различными типами данных (укажите в аннотации типов list)\n"
-    "   - Метод **show** принимает на вход параметр **value** (тип Any) и выводит его значение\n"
+    "   - Метод **show**, который выводит значениие **value_lst** (подсказка: используйте self)\n"
     "- После определения класса, определите объект класса (экземпляра класса), закрепив за ним название переменной **result**\n"
     "- В качестве аргумента подайте список [1, 2, 3]\n"
-    "- Далее вызовите метод **show**, подав аргумент **value_lst** экземпляра класса **result**\n"
+    "- Далее вызовите метод **show** экземпляра класса **result**\n"
     "- Не забывайте про **DOCSTRING**, а также **TYPE HINTS**\n"
     "**Пример кода и вывода:**"
 )
 st.code('result = Number(value_lst = [1, 2, 3])\n'
-        'result.show(result.value_lst)', language="python")
+        'result.show()', language="python")
 
 loc = {}
 content = st_ace(
@@ -96,14 +96,8 @@ if content:
                 loc["Number"].show.__doc__, str
             ), "Напишите docstring для метода show()"
             assert (
-                "value" in loc["Number"].__dict__["show"].__annotations__.keys()
-            ), "Проверьте, что show() принимает параметр value, а также type hints"
-            assert (
-                len(loc["Number"].__dict__["show"].__annotations__.keys()) == 2
-            ), "Добавьте type hints в методе show() для value и возвращаемого значения"
-            assert (
-                loc["Number"].__dict__["show"].__annotations__["value"] == Any
-            ), "Проверьте тип type hints для value в методе show()"
+                len(loc["Number"].__dict__["show"].__annotations__.keys()) == 1
+            ), "Проверьте, что show() ничего не принимает на вход кроме self, а также type hints для возвращаемого значения"
             assert (
                 loc["Number"].__dict__["show"].__annotations__["return"] is None
             ), "Проверьте тип type hints для возвращаемого значения в методе show()"
@@ -111,8 +105,8 @@ if content:
             # result
             assert "result" in loc.keys(), "Проверьте переменную result"
             assert (
-                loc["result"].value_lst == result_check.value_lst
-            ), "Проверьте передаваемые значения аргументов в Number"
+                loc["result"].value_lst == [1, 2, 3]
+            ), "Проверьте передаваемые значения аргумента value_lst в Number"
             assert (
                 s.getvalue().find("[1, 2, 3]") > -1
             ), "Вызовите метод show() экземпляра класса result"

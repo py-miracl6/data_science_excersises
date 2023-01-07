@@ -23,14 +23,11 @@ hide_streamlit_style = """
     footer {visibility: hidden;}
     </style>"""
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 st.subheader("HW2. Блок Python. Задача 4")
 st.markdown(
-    "- Определите класс **Number**, в котором определите свойства:\n"
-    "   - Динамическую переменную **value_lst** - это список с различными типами данных (укажите в аннотации типов list)\n"
-    "   - Метод **show** принимает на вход параметр **value** (тип Any) и выводит его значение\n"
-    "- Не забывайте про **DOCSTRING**, а также **TYPE HINTS**"
-)
-st.markdown(
+    "- <span style='color:red;'>**СКОПИРЙТЕ ИТОГОВОЕ РЕШЕНИЕ ДЛЯ СЛЕДУЮЩЕГО ЗАДАНИЯ**</span>\n"
+    "- Пусть класс **Number** вам уже дан со всеми аттрибутами (из прошлого задания), заново его определять не нужно\n"
     "- Определите класс  **Math**, который будет являться дочерним классом от **Number** и унаследует все атрибуты данного класса\n"
     "- Определите дополнительно в классе **Math** свойства:\n"
     "   - Динамическую переменную **number** - число (тип int)\n"
@@ -40,7 +37,7 @@ st.markdown(
     "- После определения класса, определите объект класса (экземпляра класса), закрепив за ним название переменной **math**\n"
     "- В качестве аргументов подайте значения **value_lst = [1, 2, 3]**, **number = 3**\n"
     "- Переменной **result** присвойте вызов метода **multi** экземпляра класса **math**\n"
-    "**Пример:**"
+    "**Пример:**", unsafe_allow_html=True
 )
 st.code(
     "math = Math(value_lst = [1, 2, 3], number = 3)\n" "result = math.multi()",
@@ -48,47 +45,54 @@ st.code(
 )
 
 
-def test_number(data):
-    try:
-        # Number
-        assert "Number" in data.keys(), "Проверьте название класса Number"
-        assert isinstance(data["Number"].__doc__, str), "Напишите docstring для Number"
-        # __init__
-        assert (
-            "__init__" in data["Number"].__dict__
-        ), "Проверьте наличие метода __init__()"
-        assert isinstance(
-            data["Number"].__init__.__doc__, str
-        ), "Напишите docstring для метода _ _ init _ _()"
-        assert (
-            "value_lst" in data["Number"](1).__dict__
-        ), "Проверьте, что в _ _ init _ _() подаете value_lst"
-        assert (
-            len(data["Number"].__dict__["__init__"].__annotations__.keys()) == 1
-        ), "Добавьте type hints только для value_lst в методе _ _ init _ _()"
-        assert (
-            data["Number"].__dict__["__init__"].__annotations__["value_lst"] == list
-        ), "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
+class Number:
+    """Класс для определения списка со различными значениями"""
+    def __init__(self, value_lst: list):
+        """Инициализация списка"""
+        self.value_lst = value_lst
 
-        # show
-        assert "show" in data["Number"].__dict__, "Проверьте наличие метода show()"
-        assert isinstance(
-            data["Number"].show.__doc__, str
-        ), "Напишите docstring для метода show()"
-        assert (
-            "value" in data["Number"].__dict__["show"].__annotations__.keys()
-        ), "Проверьте, что show() принимает параметр value, а также type hints"
-        assert (
-            len(data["Number"].__dict__["show"].__annotations__.keys()) == 2
-        ), "Добавьте type hints в методе show() для value и возвращаемого значения"
-        assert (
-            data["Number"].__dict__["show"].__annotations__["value"] == Any
-        ), "Проверьте тип type hints для value в методе show()"
-        assert (
-            data["Number"].__dict__["show"].__annotations__["return"] is None
-        ), "Проверьте тип type hints для возвращаемого значения в методе show()"
-    except Exception as ex:
-        return ex
+    def show(self) -> None:
+        """Вывод значений"""
+        print(self.value_lst)
+# def test_number(data):
+#     """Тестирование Number"""
+#     # Number
+#     assert "Number" in data.keys(), "Проверьте название класса Number"
+#     assert isinstance(data["Number"].__doc__, str), "Напишите docstring для Number"
+#     # __init__
+#     assert (
+#         "__init__" in data["Number"].__dict__
+#     ), "Проверьте наличие метода __init__()"
+#     assert isinstance(
+#         data["Number"].__init__.__doc__, str
+#     ), "Напишите docstring для метода _ _ init _ _()"
+#     assert (
+#         "value_lst" in data["Number"](1).__dict__
+#     ), "Проверьте, что в _ _ init _ _() подаете value_lst"
+#     assert (
+#         len(data["Number"].__dict__["__init__"].__annotations__.keys()) == 1
+#     ), "Добавьте type hints только для value_lst в методе _ _ init _ _()"
+#     assert (
+#         data["Number"].__dict__["__init__"].__annotations__["value_lst"] == list
+#     ), "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
+#
+#     # show
+#     assert "show" in data["Number"].__dict__, "Проверьте наличие метода show()"
+#     assert isinstance(
+#         data["Number"].show.__doc__, str
+#     ), "Напишите docstring для метода show()"
+#     assert (
+#         "value" in data["Number"].__dict__["show"].__annotations__.keys()
+#     ), "Проверьте, что show() принимает параметр value, а также type hints"
+#     assert (
+#         len(data["Number"].__dict__["show"].__annotations__.keys()) == 2
+#     ), "Добавьте type hints в методе show() для value и возвращаемого значения"
+#     assert (
+#         data["Number"].__dict__["show"].__annotations__["value"] == Any
+#     ), "Проверьте тип type hints для value в методе show()"
+#     assert (
+#         data["Number"].__dict__["show"].__annotations__["return"] is None
+#     ), "Проверьте тип type hints для возвращаемого значения в методе show()"
 
 
 loc = {}
@@ -112,7 +116,7 @@ if content:
         st.write(s.getvalue())
         # exec(content, globals(), loc)
         try:
-            test_number(loc)
+            # test_number(loc)
 
             # Math
             assert "Math" in loc.keys(), "Проверьте название класса Math"
