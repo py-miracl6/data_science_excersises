@@ -75,10 +75,10 @@ if content:
             try:
                 assert (
                     loc["summation"](3, "str") is None
-                ), "Проблемы с try-except, в блоке except ничего не нужно возвращать"
+                ), "Проблемы с try-except, также проверьте, что в блоке except используется простой вывод сообщения об ошибке"
                 st.success("Все верно! Ключ = 99")
             except Exception as ex:
-                st.error("Добавьте исключение try-except")
+                st.error(ex)
         except Exception as ex:
             st.error(ex)
     except Exception as ex:
