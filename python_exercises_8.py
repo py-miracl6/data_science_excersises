@@ -1,0 +1,182 @@
+import streamlit as st
+from streamlit_ace import st_ace
+from typing import Any, Union
+import sys
+from io import StringIO
+import contextlib
+
+
+@contextlib.contextmanager
+def stdoutIO(stdout=None):
+    old = sys.stdout
+    if stdout is None:
+        stdout = StringIO()
+    sys.stdout = stdout
+    yield stdout
+    sys.stdout = old
+
+
+st.set_page_config(layout="wide")
+hide_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    </style>"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+st.subheader("HW2. Блок Python. Задача 4")
+st.markdown(
+    "- Определите класс **Number**, в котором определите свойства:\n"
+    "   - Динамическую переменную **value_lst** - это список с различными типами данных (укажите в аннотации типов list)\n"
+    "   - Метод **show** принимает на вход параметр **value** (тип Any) и выводит его значение\n"
+    "- Не забывайте про **DOCSTRING**, а также **TYPE HINTS**"
+)
+st.markdown(
+    "- Определите класс  **Math**, который будет являться дочерним классом от **Number** и унаследует все атрибуты данного класса\n"
+    "- Определите дополнительно в классе **Math** свойства:\n"
+    "   - Динамическую переменную **number** - число (тип int)\n"
+    "   - Метод **multi** - должен возвращать список (тип list), который сформирован путем умножения **number** на каждое из значений списка **value_lst** (унаследован из Number)\n"
+    "   - В методе **multi** должно быть предусмотрено исключение **TRY-EXCEPT** на случай, если **number** будет умножен на нерелевантный тип данных\n"
+    "- Не забывайте про **DOCSTRING**, а также **TYPE HINTS**\n"
+    "- После определения класса, определите объект класса (экземпляра класса), закрепив за ним название переменной **math**\n"
+    "- В качестве аргументов подайте значения **value_lst = [1, 2, 3]**, **number = 3**\n"
+    "- Переменной **result** присвойте вызов метода **multi** экземпляра класса **math**\n"
+    "**Пример:**"
+)
+st.code(
+    "math = Math(value_lst = [1, 2, 3], number = 3)\n" "result = math.multi()",
+    language="python",
+)
+
+
+def test_number(data):
+    try:
+        # Number
+        assert "Number" in data.keys(), "Проверьте название класса Number"
+        assert isinstance(data["Number"].__doc__, str), "Напишите docstring для Number"
+        # __init__
+        assert (
+            "__init__" in data["Number"].__dict__
+        ), "Проверьте наличие метода __init__()"
+        assert isinstance(
+            data["Number"].__init__.__doc__, str
+        ), "Напишите docstring для метода _ _ init _ _()"
+        assert (
+            "value_lst" in data["Number"](1).__dict__
+        ), "Проверьте, что в _ _ init _ _() подаете value_lst"
+        assert (
+            len(data["Number"].__dict__["__init__"].__annotations__.keys()) == 1
+        ), "Добавьте type hints только для value_lst в методе _ _ init _ _()"
+        assert (
+            data["Number"].__dict__["__init__"].__annotations__["value_lst"] == list
+        ), "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
+
+        # show
+        assert "show" in data["Number"].__dict__, "Проверьте наличие метода show()"
+        assert isinstance(
+            data["Number"].show.__doc__, str
+        ), "Напишите docstring для метода show()"
+        assert (
+            "value" in data["Number"].__dict__["show"].__annotations__.keys()
+        ), "Проверьте, что show() принимает параметр value, а также type hints"
+        assert (
+            len(data["Number"].__dict__["show"].__annotations__.keys()) == 2
+        ), "Добавьте type hints в методе show() для value и возвращаемого значения"
+        assert (
+            data["Number"].__dict__["show"].__annotations__["value"] == Any
+        ), "Проверьте тип type hints для value в методе show()"
+        assert (
+            data["Number"].__dict__["show"].__annotations__["return"] is None
+        ), "Проверьте тип type hints для возвращаемого значения в методе show()"
+    except Exception as ex:
+        return ex
+
+
+loc = {}
+content = st_ace(
+    placeholder="Ваш код",
+    language="python",
+    theme="chrome",
+    keybinding="vscode",
+    show_gutter=True,
+    min_lines=10,
+    key="ace",
+)
+
+
+if content:
+    st.markdown("### Результат")
+    # st.subheader("Результат")
+    try:
+        with stdoutIO() as s:
+            exec(content, globals(), loc)
+        st.write(s.getvalue())
+        # exec(content, globals(), loc)
+        try:
+            test_number(loc)
+
+            # Math
+            assert "Math" in loc.keys(), "Проверьте название класса Math"
+            assert isinstance(loc["Math"].__doc__, str), "Напишите docstring для Math"
+
+            # __init__
+            assert (
+                "__init__" in loc["Math"].__dict__
+            ), "Проверьте наличие метода __init__()"
+            assert isinstance(
+                loc["Math"].__init__.__doc__, str
+            ), "Напишите docstring для метода _ _ init _ _()"
+            assert (
+                "value_lst" in loc["Math"]([2, 3], 1).__dict__
+            ), "Проверьте, что в _ _ init _ _() подаете value_lst"
+            assert (
+                "number" in loc["Math"]([2, 3], 1).__dict__
+            ), "Проверьте, что в _ _ init _ _() подаете number"
+            assert (
+                len(loc["Math"].__dict__["__init__"].__annotations__.keys()) == 2
+            ), "Добавьте type hints в методе _ _ init _ _()"
+            assert (
+                loc["Math"].__dict__["__init__"].__annotations__["value_lst"] == list
+            ), "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
+            assert (
+                loc["Math"].__dict__["__init__"].__annotations__["number"] == int
+            ), "Проверьте тип type hints для number в методе _ _ init _ _()"
+
+            # multi
+            assert "multi" in loc["Math"].__dict__, "Проверьте наличие метода multi()"
+            assert isinstance(
+                loc["Math"].multi.__doc__, str
+            ), "Напишите docstring для метода multi()"
+            assert (
+                len(loc["Math"].__dict__["multi"].__annotations__.keys()) == 1
+            ), "Проверьте, что метод multi() не принимает параметров (кроме self), а также type hints для возвращаемого значения"
+            assert (
+                loc["Math"].__dict__["multi"].__annotations__["return"] == list
+            ), "Проверьте тип type hints для возвращаемого значения в методе multi()"
+
+            # result
+            assert "math" in loc.keys(), "Проверьте переменную math"
+            assert "result" in loc.keys(), "Проверьте переменную result"
+            assert (
+                loc["math"].value_lst == [1, 2, 3]
+            ), "Проверьте передаваемые значения аргумента value_lst в Math"
+            assert (
+                loc["math"].number == 3
+            ), "Проверьте передаваемые значения аргумента number в Math"
+            assert loc["result"] == [3, 6, 9], "Проверьте значения в переменной result"
+
+            # try-except
+            try:
+                assert (
+                    loc["Math"](["str", 1], 3.4).multi() is None
+                ), "Проверьте, что в блоке except используется простой вывод сообщения об ошибке"
+                st.success("Все верно! Ключ = 99")
+            except Exception as ex:
+                if "что в блоке except" in str(ex):
+                    st.error(ex)
+                else:
+                    st.error("Проверьте наличие блока try-except в методе multi()")
+            # st.success("Все верно! Ключ = 92")
+        except Exception as ex:
+            st.error(ex)
+    except Exception as ex:
+        st.error(ex)

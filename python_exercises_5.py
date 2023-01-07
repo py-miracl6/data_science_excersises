@@ -58,13 +58,13 @@ if content:
             ), "Добавьте type hints для value_1, value_2 и возвращаемого значения"
             assert (
                 loc["summation"].__annotations__["value_1"] == Union[int, float]
-            ), "Проверьте type hints для value_1"
+            ), "Проверьте тип type hints для value_1"
             assert (
                 loc["summation"].__annotations__["value_2"] == Union[int, float]
-            ), "Проверьте type hints для value_2"
+            ), "Проверьте тип type hints для value_2"
             assert (
                 loc["summation"].__annotations__["return"] == Union[int, float]
-            ), "Проверьте type hints для возвращаемого значения"
+            ), "Проверьте тип type hints для возвращаемого значения"
             assert isinstance(
                 loc["summation"].__doc__, str
             ), "Напишите docstring для функции"

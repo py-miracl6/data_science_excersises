@@ -73,10 +73,10 @@ if content:
             ), "Добавьте type hints для args и возвращаемого значения"
             assert (
                 loc["adding_str_values"].__annotations__["args"] == Any
-            ), "Проверьте type hints для value_1"
+            ), "Проверьте тип type hints для value_1"
             assert (
                 loc["adding_str_values"].__annotations__["return"] == Union[None, list]
-            ), "Проверьте type hints для возвращаемого значения"
+            ), "Проверьте тип type hints для возвращаемого значения"
             assert isinstance(
                 loc["adding_str_values"].__doc__, str
             ), "Напишите docstring для функции"
