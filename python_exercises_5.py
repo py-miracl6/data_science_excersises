@@ -15,6 +15,7 @@ def stdoutIO(stdout=None):
     yield stdout
     sys.stdout = old
 
+
 st.set_page_config(layout="wide")
 hide_streamlit_style = """
     <style>
@@ -71,14 +72,17 @@ if content:
                 loc["summation"](5, 1.1) == 6.1
             ), "Проверьте, что вы возращаете результат сложения value_1 и value_2"
             assert "result" in loc.keys(), "Проверьте переменную result"
-            assert loc['result'] == 121.4, "Проверьте значение в переменной result"
+            assert loc["result"] == 121.4, "Проверьте значение в переменной result"
             try:
                 assert (
                     loc["summation"](3, "str") is None
-                ), "Проблемы с try-except, также проверьте, что в блоке except используется простой вывод сообщения об ошибке"
+                ), "Проверьте, что в блоке except используется простой вывод сообщения об ошибке"
                 st.success("Все верно! Ключ = 99")
             except Exception as ex:
-                st.error(ex)
+                if "что в блоке except" in str(ex):
+                    st.error(ex)
+                else:
+                    st.error("Проверьте наличие блока try-except")
         except Exception as ex:
             st.error(ex)
     except Exception as ex:
