@@ -1,6 +1,20 @@
 import streamlit as st
 from streamlit_ace import st_ace
+import sys
+from io import StringIO
+import contextlib
 
+
+@contextlib.contextmanager
+def stdoutIO(stdout=None):
+    old = sys.stdout
+    if stdout is None:
+        stdout = StringIO()
+    sys.stdout = stdout
+    yield stdout
+    sys.stdout = old
+
+st.set_page_config(layout="wide")
 hide_streamlit_style = """
     <style>
     #MainMenu {visibility: hidden;}
@@ -9,7 +23,7 @@ hide_streamlit_style = """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 st.subheader("HW1. Блок Python. Задача 3")
 st.markdown(
-    "- Создайте переменную **value** и присвойте ей список, включающий три любых значения.\n"
+    "- Создайте переменную **value** и присвойте ей список, включающий три любых значения\n"
     "- Добавьте в конец списка строку **'это строка'**"
 )
 
@@ -32,10 +46,13 @@ if content:
     value_check_append.append("это строка")
 
     try:
-        exec(content, globals(), loc)
+        with stdoutIO() as s:
+            exec(content, globals(), loc)
+        st.write(s.getvalue())
+        # exec(content, globals(), loc)
         try:
             value = loc["value"]
-            if isinstance(value, list) != True:
+            if not isinstance(value, list):
                 st.error(f"Проверьте, что в переменной value список")
             elif len(value[:-1]) != len(value_check):
                 st.error(f"Проверьте кол-во значений в переменной value")

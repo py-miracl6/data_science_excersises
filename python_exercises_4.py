@@ -1,6 +1,20 @@
 import streamlit as st
 from streamlit_ace import st_ace
+import sys
+from io import StringIO
+import contextlib
 
+
+@contextlib.contextmanager
+def stdoutIO(stdout=None):
+    old = sys.stdout
+    if stdout is None:
+        stdout = StringIO()
+    sys.stdout = stdout
+    yield stdout
+    sys.stdout = old
+
+st.set_page_config(layout="wide")
 hide_streamlit_style = """
     <style>
     #MainMenu {visibility: hidden;}
@@ -30,18 +44,23 @@ if content:
     value_check = {1: [1, 3], "key": (1, 2, 4), 2: "строка"}
 
     try:
-        exec(content, globals(), loc)
+        with stdoutIO() as s:
+            exec(content, globals(), loc)
+        st.write(s.getvalue())
+        # exec(content, globals(), loc)
         try:
-            value = loc["value"]
-            if isinstance(value, dict) is not True:
-                st.error(f"Проверьте, что в переменной value словарь")
-            elif len(list(value.keys())[:-1]) != len(value_check.keys()):
-                st.error(f"Проверьте кол-во ключей в словаре value")
-            elif "key3" not in list(value.keys()):
-                st.error(f"Проверьте, что вы добавили в словарь ключ 'key3'")
-            else:
-                st.success("Все верно! Ключ = 48")
+            assert "value" in loc.keys(), "Проверьте название переменной value"
+            assert (
+                isinstance(loc["value"], dict) is True
+            ), "Проверьте, что в переменной value словарь"
+            assert len(list(loc["value"].keys())[:-1]) == len(
+                value_check.keys()
+            ), "Проверьте кол-во ключей в словаре value"
+            assert "key3" in list(
+                loc["value"].keys()
+            ), "Проверьте, что вы добавили в словарь ключ 'key3'"
+            st.success("Все верно! Ключ = 48")
         except Exception as ex:
-            st.error(f"Проверьте названия переменных {ex}")
+            st.error(ex)
     except Exception as ex:
         st.error(ex)

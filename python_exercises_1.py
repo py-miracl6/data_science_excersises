@@ -1,5 +1,18 @@
 import streamlit as st
 from streamlit_ace import st_ace
+import sys
+from io import StringIO
+import contextlib
+
+
+@contextlib.contextmanager
+def stdoutIO(stdout=None):
+    old = sys.stdout
+    if stdout is None:
+        stdout = StringIO()
+    sys.stdout = stdout
+    yield stdout
+    sys.stdout = old
 
 
 # .css-fblp2m {visibility: hidden;}
@@ -13,6 +26,7 @@ from streamlit_ace import st_ace
 #       section[data-testid="stSidebar"][aria-expanded="false"]{
 #         width: 1%;
 #       }
+st.set_page_config(layout="wide")
 hide_streamlit_style = """
     <style>
     #MainMenu {visibility: hidden;}
@@ -24,8 +38,14 @@ st.subheader("HW1. Блок Python. Задача 1")
 st.markdown(
     "- Создайте переменную **x** и присвойте ей значение равное 6\n"
     "- Создайте переменную **y** и присвойте ей значение равное 2.5\n"
-    "- Запишите в переменную **result** выражение, используя ранее объявленные переменные **x**, **y** и\n"
-    "арифметические операторы, так, чтобы по итогу значение **result** было равно **8.75**"
+    "- Создайте переменную **result** и запишите в нее выражение, используя ранее объявленные переменные **x**, **y**, арифметические операторы, числа/цифры, так, чтобы по итогу значение в **result** было равно **8.75**"
+)
+st.markdown(
+    """
+Например:
+```python
+result = x * 2 - 2 * y / 2
+"""
 )
 
 loc = {}
@@ -46,12 +66,15 @@ if content:
     result_check = x_check + 2 * 2 - y_check / 2
 
     try:
-        exec(content, globals(), loc)
-
+        with stdoutIO() as s:
+            exec(content, globals(), loc)
+        st.write(s.getvalue())
+        # exec(content, globals(), loc)
         try:
             x = loc["x"]
             y = loc["y"]
             result = loc["result"]
+
             if x != x_check:
                 st.error(f"Проверьте значение в переменной x")
             elif y != y_check:
