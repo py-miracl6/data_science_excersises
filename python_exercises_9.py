@@ -4,6 +4,7 @@ from typing import Any, Union
 import sys
 from io import StringIO
 import contextlib
+import inspect
 
 
 @contextlib.contextmanager
@@ -70,15 +71,14 @@ content = st_ace(
     key="ace",
 )
 
+
 def test_math(data):
     # Math
     assert "Math" in data.keys(), "Проверьте название класса Math"
     assert isinstance(data["Math"].__doc__, str), "Напишите docstring для Math"
 
     # __init__
-    assert (
-        "__init__" in data["Math"].__dict__
-    ), "Проверьте наличие метода __init__()"
+    assert "__init__" in data["Math"].__dict__, "Проверьте наличие метода __init__()"
     assert isinstance(
         data["Math"].__init__.__doc__, str
     ), "Напишите docstring для метода _ _ init _ _()"
@@ -126,6 +126,11 @@ if content:
             assert (
                 "_summation" in loc["Math"].__dict__
             ), "Проверьте наличие метода _summation()"
+            assert (
+                isinstance(
+                    inspect.getattr_static(loc["Math"], "_summation"), staticmethod
+                )
+            ), "Проверьте, что метод _summation() статический"
             assert isinstance(
                 loc["Math"]._summation.__doc__, str
             ), "Напишите docstring для метода _summation()"
@@ -136,11 +141,14 @@ if content:
                 loc["Math"]._summation.__annotations__["value"] == list
             ), "Проверьте тип type hints для value в методе _summation()"
             assert (
-                loc["Math"]._summation.__annotations__["return"] == Union[int, float, None]
+                loc["Math"]._summation.__annotations__["return"]
+                == Union[int, float, None]
             ), "Проверьте тип type hints для возвращаемого значения в методе _summation() (подсказка Union[..., ..., ...])"
 
             # average
-            assert "average" in loc["Math"].__dict__, "Проверьте наличие метода average()"
+            assert (
+                "average" in loc["Math"].__dict__
+            ), "Проверьте наличие метода average()"
             assert isinstance(
                 loc["Math"].average.__doc__, str
             ), "Напишите docstring для метода average()"
@@ -148,9 +156,9 @@ if content:
                 len(loc["Math"].__dict__["average"].__annotations__.keys()) == 1
             ), "Проверьте, что метод average() не принимает параметров (кроме self), а также type hints для возвращаемого значения"
             assert (
-                loc["Math"].__dict__["average"].__annotations__["return"] == Union[float, None]
+                loc["Math"].__dict__["average"].__annotations__["return"]
+                == Union[float, None]
             ), "Проверьте тип type hints для возвращаемого значения в методе average() (подсказка Union[..., ...])"
-
 
             # result
             assert "math" in loc.keys(), "Проверьте переменную math"
@@ -182,7 +190,7 @@ if content:
             # _summation
             try:
                 assert (
-                    loc["Math"]._summation([1, 'hh']) is None
+                    loc["Math"]._summation([1, "hh"]) is None
                 ), "Проверьте, что в блоке except используется простой вывод сообщения об ошибке"
             except Exception as ex:
                 if "что в блоке except" in str(ex):
@@ -192,7 +200,7 @@ if content:
             # average
             try:
                 assert (
-                    loc["Math"]([1, 'hh'], 4).average() is None
+                    loc["Math"]([1, "hh"], 4).average() is None
                 ), "Проверьте, что в блоке except используется простой вывод сообщения об ошибке"
                 st.success("Все верно! Ключ = 99")
             except Exception as ex:
