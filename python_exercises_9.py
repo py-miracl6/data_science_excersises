@@ -40,7 +40,9 @@ st.markdown(
     unsafe_allow_html=True,
 )
 st.code(
-    "math = Math(value_lst = [2, 3, 4], number = 2)\n" "result = math.multi()",
+    "math = Math(value_lst = [2, 3, 4], number = 2)\n"
+    "result_1 = math.average()\n"
+    "result_2 = math._summation(math.value_lst)",
     language="python",
 )
 
