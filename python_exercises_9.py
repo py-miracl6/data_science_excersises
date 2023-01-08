@@ -107,8 +107,8 @@ def test_math(data):
         len(data["Math"].__dict__["multi"].__annotations__.keys()) == 1
     ), "Проверьте, что метод multi() не принимает параметров (кроме self), а также type hints для возвращаемого значения"
     assert (
-        data["Math"].__dict__["multi"].__annotations__["return"] == list
-    ), "Проверьте тип type hints для возвращаемого значения в методе multi()"
+                data["Math"].__dict__["multi"].__annotations__["return"] == Union[list, None]
+            ), "Проверьте тип type hints для возвращаемого значения в методе multi() (подсказка Union[None, ....]"
 
 
 if content:
