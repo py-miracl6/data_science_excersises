@@ -100,7 +100,7 @@ if content:
             ), "Проверьте, что show() ничего не принимает на вход кроме self, а также type hints для возвращаемого значения"
             assert (
                 loc["Number"].__dict__["show"].__annotations__["return"] is None
-            ), "Проверьте тип type hints для возвращаемого значения в методе show()"
+            ), "Проверьте тип type hints для возвращаемого значения в методе show() (должно быть None, так как ничего не возвращает)"
 
             # result
             assert "result" in loc.keys(), "Проверьте переменную result"
