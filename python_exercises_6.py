@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_ace import st_ace
-from typing import Any, Union
+from typing import Any, Union, List
 import sys
 from io import StringIO
 import contextlib
@@ -75,7 +75,7 @@ if content:
                 loc["adding_str_values"].__annotations__["args"] == Any
             ), "Проверьте тип type hints для value_1"
             assert (
-                loc["adding_str_values"].__annotations__["return"] == list
+                loc["adding_str_values"].__annotations__["return"] in [list, List[str]]
             ), "Проверьте тип type hints для возвращаемого значения"
             assert isinstance(
                 loc["adding_str_values"].__doc__, str
