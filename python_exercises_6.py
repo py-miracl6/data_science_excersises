@@ -75,7 +75,7 @@ if content:
                 loc["adding_str_values"].__annotations__["args"] == Any
             ), "Проверьте тип type hints для value_1"
             assert (
-                loc["adding_str_values"].__annotations__["return"] in [list, List[str]]
+                loc["adding_str_values"].__annotations__["return"] in [list, List[str], list[str]]
             ), "Проверьте тип type hints для возвращаемого значения"
             assert isinstance(
                 loc["adding_str_values"].__doc__, str
