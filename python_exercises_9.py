@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_ace import st_ace
-from typing import Any, Union
+from typing import Any, Union, List
 import sys
 from io import StringIO
 import contextlib
@@ -51,7 +51,7 @@ st.code(
 class Number:
     """Класс для определения списка со различными значениями"""
 
-    def __init__(self, value_lst: list):
+    def __init__(self, value_lst: list) -> None:
         """Инициализация списка"""
         self.value_lst = value_lst
 
@@ -85,18 +85,23 @@ def test_math(data):
     assert (
         "value_lst" in data["Math"]([2, 3], 1).__dict__
     ), "Проверьте, что в _ _ init _ _() подаете value_lst"
+
     assert (
         "number" in data["Math"]([2, 3], 1).__dict__
     ), "Проверьте, что в _ _ init _ _() подаете number"
     assert (
-        len(data["Math"].__dict__["__init__"].__annotations__.keys()) == 2
-    ), "Добавьте type hints в методе _ _ init _ _()"
-    assert (
-        data["Math"].__dict__["__init__"].__annotations__["value_lst"] == list
-    ), "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
+        len(data["Math"].__dict__["__init__"].__annotations__.keys()) == 3
+    ), "Добавьте type hints в методе _ _ init _ _() для value_lst, number и возвращаемого значения"
+    assert data["Math"].__dict__["__init__"].__annotations__["value_lst"] in [
+        list,
+        List[Any],
+    ], "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
     assert (
         data["Math"].__dict__["__init__"].__annotations__["number"] == int
     ), "Проверьте тип type hints для number в методе _ _ init _ _()"
+    assert (
+        data["Math"].__dict__["__init__"].__annotations__["return"] is None
+    ), "Проверьте тип type hints для возвращаемого значения в методе _ _ init _ _(), должен быть None"
 
     # multi
     assert "multi" in data["Math"].__dict__, "Проверьте наличие метода multi()"
@@ -107,8 +112,8 @@ def test_math(data):
         len(data["Math"].__dict__["multi"].__annotations__.keys()) == 1
     ), "Проверьте, что метод multi() не принимает параметров (кроме self), а также type hints для возвращаемого значения"
     assert (
-                data["Math"].__dict__["multi"].__annotations__["return"] == Union[list, None]
-            ), "Проверьте тип type hints для возвращаемого значения в методе multi() (подсказка Union[None, ....]"
+        data["Math"].__dict__["multi"].__annotations__["return"] == Union[list, None]
+    ), "Проверьте тип type hints для возвращаемого значения в методе multi() (подсказка Union[None, ....])"
 
 
 if content:
@@ -126,10 +131,8 @@ if content:
             assert (
                 "_summation" in loc["Math"].__dict__
             ), "Проверьте наличие метода _summation()"
-            assert (
-                isinstance(
-                    inspect.getattr_static(loc["Math"], "_summation"), staticmethod
-                )
+            assert isinstance(
+                inspect.getattr_static(loc["Math"], "_summation"), staticmethod
             ), "Проверьте, что метод _summation() статический"
             assert isinstance(
                 loc["Math"]._summation.__doc__, str
@@ -138,8 +141,12 @@ if content:
                 len(loc["Math"]._summation.__annotations__.keys()) == 2
             ), "Проверьте, что метод _summation() принимает параметр value, а также type hints"
             assert (
-                loc["Math"]._summation.__annotations__["value"] == list
-            ), "Проверьте тип type hints для value в методе _summation()"
+                "value" in loc["Math"]._summation.__annotations__.keys()
+            ), "Проверьте, что метод _summation() принимает параметр value"
+            assert loc["Math"]._summation.__annotations__["value"] in [
+                list,
+                List[Any],
+            ], "Проверьте тип type hints для value в методе _summation()"
             assert (
                 loc["Math"]._summation.__annotations__["return"]
                 == Union[int, float, None]
@@ -202,7 +209,7 @@ if content:
                 assert (
                     loc["Math"]([1, "hh"], 4).average() is None
                 ), "Проверьте, что в блоке except используется простой вывод сообщения об ошибке"
-                st.success("Все верно! Ключ = 99")
+                st.success("Все верно! Ключ = 11")
             except Exception as ex:
                 if "что в блоке except" in str(ex):
                     st.error(ex)

@@ -52,7 +52,7 @@ content = st_ace(
 
 
 class Number_check:
-    def __init__(self, value_lst: list):
+    def __init__(self, value_lst: list) -> None:
         self.value_lst = value_lst
 
 
