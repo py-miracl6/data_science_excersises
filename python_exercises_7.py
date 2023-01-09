@@ -88,7 +88,7 @@ if content:
                 len(loc["Number"].__dict__["__init__"].__annotations__.keys()) == 2
             ), "Добавьте type hints для value_lst и возвращаемого значения в методе _ _ init _ _()"
             assert (
-                loc["Number"].__dict__["__init__"].__annotations__["value_lst"] in [list, list[Any], List[Any]]
+                loc["Number"].__dict__["__init__"].__annotations__["value_lst"] in [list, List[Any]]
             ), "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
             assert (
                     loc["Number"].__dict__["__init__"].__annotations__["return"] is None

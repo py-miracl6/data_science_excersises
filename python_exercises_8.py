@@ -32,7 +32,7 @@ st.markdown(
     "- Определите дополнительно в классе **Math** свойства:\n"
     "   - Динамическую переменную **number** - число (тип int)\n"
     "   - Метод **multi** - должен возвращать список (тип list), который сформирован путем умножения **number** на каждое из значений списка **value_lst** (унаследован из Number)\n"
-    "   - В методе **multi** должно быть предусмотрено исключение **TRY-EXCEPT** на случай, если **number** будет умножен на нерелевантный тип данных\n"
+    "   - В методе **multi** должно быть предусмотрено исключение **TRY-EXCEPT** на случай, если **number** будет умножен на нерелевантный тип данных, при ошибке не должно ничего возвращатся\n"
     "- Не забывайте про **DOCSTRING**, а также **TYPE HINTS**\n"
     "- После определения класса, определите объект класса (экземпляра класса), закрепив за ним название переменной **math**\n"
     "- В качестве аргументов подайте значения **value_lst = [1, 2, 3]**, **number = 3**\n"
@@ -95,20 +95,22 @@ if content:
             assert (
                 "value_lst" in loc["Math"]([2, 3], 1).__dict__
             ), "Проверьте, что в _ _ init _ _() подаете value_lst"
+
             assert (
                 "number" in loc["Math"]([2, 3], 1).__dict__
             ), "Проверьте, что в _ _ init _ _() подаете number"
             assert (
                 len(loc["Math"].__dict__["__init__"].__annotations__.keys()) == 3
             ), "Добавьте type hints в методе _ _ init _ _() для value_lst, number и возвращаемого значения"
-            assert (
-                loc["Math"].__dict__["__init__"].__annotations__["value_lst"] in [list, list[Any], List[Any]]
-            ), "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
+            assert loc["Math"].__dict__["__init__"].__annotations__["value_lst"] in [
+                list,
+                List[Any],
+            ], "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
             assert (
                 loc["Math"].__dict__["__init__"].__annotations__["number"] == int
             ), "Проверьте тип type hints для number в методе _ _ init _ _()"
             assert (
-                    loc["Math"].__dict__["__init__"].__annotations__["return"] is None
+                loc["Math"].__dict__["__init__"].__annotations__["return"] is None
             ), "Проверьте тип type hints для возвращаемого значения в методе _ _ init _ _(), должен быть None"
 
             # multi
@@ -122,11 +124,12 @@ if content:
             assert (
                 loc["Math"].__dict__["multi"].__annotations__["return"]
                 == Union[list, None]
-            ), "Проверьте тип type hints для возвращаемого значения в методе multi() (подсказка Union[None, ....]"
+            ), "Проверьте тип type hints для возвращаемого значения в методе multi() (подсказка Union[None, ....])"
 
             # result
             assert "math" in loc.keys(), "Проверьте переменную math"
             assert "result" in loc.keys(), "Проверьте переменную result"
+
             assert loc["math"].value_lst == [
                 1,
                 2,
