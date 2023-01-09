@@ -122,7 +122,7 @@ if content:
             assert (
                 loc["Math"].__dict__["multi"].__annotations__["return"]
                 == Union[list, None]
-            ), "Проверьте тип type hints для возвращаемого значения в методе multi() (подсказка Union[None, ....]"
+            ), "Проверьте тип type hints для возвращаемого значения в методе multi() (подсказка Union[None, ....], int быть не может"
 
             # result
             assert "math" in loc.keys(), "Проверьте переменную math"
