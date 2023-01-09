@@ -85,11 +85,14 @@ if content:
                 "value_lst" in loc["Number"](1).__dict__
             ), "Проверьте, что в _ _ init _ _() подаете value_lst"
             assert (
-                len(loc["Number"].__dict__["__init__"].__annotations__.keys()) == 1
-            ), "Добавьте type hints только для value_lst в методе _ _ init _ _()"
+                len(loc["Number"].__dict__["__init__"].__annotations__.keys()) == 2
+            ), "Добавьте type hints для value_lst и возвращаемого значения в методе _ _ init _ _()"
             assert (
                 loc["Number"].__dict__["__init__"].__annotations__["value_lst"] in [list, list[Any], List[Any]]
             ), "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
+            assert (
+                    loc["Number"].__dict__["__init__"].__annotations__["return"] is None
+            ), "Проверьте тип type hints для возвращаемого значения в методе _ _ init _ _(), должен быть None"
 
             # show
             assert "show" in loc["Number"].__dict__, "Проверьте наличие метода show()"
