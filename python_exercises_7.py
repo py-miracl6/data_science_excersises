@@ -96,10 +96,10 @@ if content:
                 loc["Number"].show.__doc__, str
             ), "Напишите docstring для метода show()"
             assert (
-                len(loc["Number"].__dict__["show"].__annotations__.keys()) == 1
+                len(loc["Number"].show.__annotations__.keys()) == 1
             ), "Проверьте, что show() ничего не принимает на вход кроме self, а также type hints для возвращаемого значения"
             assert (
-                loc["Number"].__dict__["show"].__annotations__["return"] is None
+                loc["Number"].show.__annotations__["return"] is None
             ), "Проверьте тип type hints для возвращаемого значения в методе show() (должно быть None, так как ничего не возвращает)"
 
             # result
