@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_ace import st_ace
-from typing import Any, Union
+from typing import Any, Union, List
 import sys
 from io import StringIO
 import contextlib
@@ -88,7 +88,7 @@ if content:
                 len(loc["Number"].__dict__["__init__"].__annotations__.keys()) == 1
             ), "Добавьте type hints только для value_lst в методе _ _ init _ _()"
             assert (
-                loc["Number"].__dict__["__init__"].__annotations__["value_lst"] == list
+                loc["Number"].__dict__["__init__"].__annotations__["value_lst"] in [list, list[Any], List[Any]]
             ), "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
 
             # show
