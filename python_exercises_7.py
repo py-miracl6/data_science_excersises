@@ -95,8 +95,8 @@ if content:
             assert isinstance(
                 loc["Number"].show.__doc__, str
             ), "Напишите docstring для метода show()"
-            assert isinstance(
-                not inspect.getattr_static(loc["Number"], "show"), staticmethod
+            assert not isinstance(
+                inspect.getattr_static(loc["Number"], "show"), staticmethod
             ), "Метод show() не должен быть статическим"
             assert (
                 len(loc["Number"].show.__annotations__.keys()) == 1
