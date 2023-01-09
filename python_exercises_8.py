@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_ace import st_ace
-from typing import Any, Union
+from typing import Any, Union, List
 import sys
 from io import StringIO
 import contextlib
@@ -99,14 +99,17 @@ if content:
                 "number" in loc["Math"]([2, 3], 1).__dict__
             ), "Проверьте, что в _ _ init _ _() подаете number"
             assert (
-                len(loc["Math"].__dict__["__init__"].__annotations__.keys()) == 2
-            ), "Добавьте type hints в методе _ _ init _ _(), также проверьте, что не нужно указывать тип возвращаемого значения в инициализаторе"
+                len(loc["Math"].__dict__["__init__"].__annotations__.keys()) == 3
+            ), "Добавьте type hints в методе _ _ init _ _() для value_lst, number и возвращаемого значения"
             assert (
-                loc["Math"].__dict__["__init__"].__annotations__["value_lst"] == list
+                loc["Math"].__dict__["__init__"].__annotations__["value_lst"] in [list, list[Any], List[Any]]
             ), "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
             assert (
                 loc["Math"].__dict__["__init__"].__annotations__["number"] == int
             ), "Проверьте тип type hints для number в методе _ _ init _ _()"
+            assert (
+                    loc["Math"].__dict__["__init__"].__annotations__["return"] is None
+            ), "Проверьте тип type hints для возвращаемого значения в методе _ _ init _ _(), должен быть None"
 
             # multi
             assert "multi" in loc["Math"].__dict__, "Проверьте наличие метода multi()"
