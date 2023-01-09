@@ -4,6 +4,7 @@ from typing import Any, Union
 import sys
 from io import StringIO
 import contextlib
+import inspect
 
 
 @contextlib.contextmanager
@@ -35,8 +36,7 @@ st.markdown(
     "- Не забывайте про **DOCSTRING**, а также **TYPE HINTS**\n"
     "**Пример кода и вывода:**"
 )
-st.code('result = Number(value_lst = [1, 2, 3])\n'
-        'result.show()', language="python")
+st.code("result = Number(value_lst = [1, 2, 3])\n" "result.show()", language="python")
 
 loc = {}
 content = st_ace(
@@ -95,6 +95,9 @@ if content:
             assert isinstance(
                 loc["Number"].show.__doc__, str
             ), "Напишите docstring для метода show()"
+            assert isinstance(
+                inspect.getattr_static(loc["Number"], "show"), staticmethod
+            ), "Метод show() не должен быть статическим"
             assert (
                 len(loc["Number"].show.__annotations__.keys()) == 1
             ), "Проверьте, что show() ничего не принимает на вход кроме self, а также type hints для возвращаемого значения"
@@ -104,9 +107,11 @@ if content:
 
             # result
             assert "result" in loc.keys(), "Проверьте переменную result"
-            assert (
-                loc["result"].value_lst == [1, 2, 3]
-            ), "Проверьте передаваемые значения аргумента value_lst в Number"
+            assert loc["result"].value_lst == [
+                1,
+                2,
+                3,
+            ], "Проверьте передаваемые значения аргумента value_lst в Number"
             assert (
                 s.getvalue().find("[1, 2, 3]") > -1
             ), "Вызовите метод show() экземпляра класса result"
