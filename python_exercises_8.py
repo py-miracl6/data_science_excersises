@@ -37,7 +37,8 @@ st.markdown(
     "- После определения класса, определите объект класса (экземпляра класса), закрепив за ним название переменной **math**\n"
     "- В качестве аргументов подайте значения **value_lst = [1, 2, 3]**, **number = 3**\n"
     "- Переменной **result** присвойте вызов метода **multi** экземпляра класса **math**\n"
-    "**Пример:**", unsafe_allow_html=True
+    "**Пример:**",
+    unsafe_allow_html=True,
 )
 st.code(
     "math = Math(value_lst = [1, 2, 3], number = 3)\n" "result = math.multi()",
@@ -47,6 +48,7 @@ st.code(
 
 class Number:
     """Класс для определения списка со различными значениями"""
+
     def __init__(self, value_lst: list):
         """Инициализация списка"""
         self.value_lst = value_lst
@@ -54,6 +56,8 @@ class Number:
     def show(self) -> None:
         """Вывод значений"""
         print(self.value_lst)
+
+
 # def test_number(data):
 #     """Тестирование Number"""
 #     # Number
@@ -154,15 +158,18 @@ if content:
                 len(loc["Math"].__dict__["multi"].__annotations__.keys()) == 1
             ), "Проверьте, что метод multi() не принимает параметров (кроме self), а также type hints для возвращаемого значения"
             assert (
-                loc["Math"].__dict__["multi"].__annotations__["return"] == Union[list, None]
+                loc["Math"].__dict__["multi"].__annotations__["return"]
+                == Union[list, None]
             ), "Проверьте тип type hints для возвращаемого значения в методе multi() (подсказка Union[None, ....]"
 
             # result
             assert "math" in loc.keys(), "Проверьте переменную math"
             assert "result" in loc.keys(), "Проверьте переменную result"
-            assert (
-                loc["math"].value_lst == [1, 2, 3]
-            ), "Проверьте передаваемые значения аргумента value_lst в Math"
+            assert loc["math"].value_lst == [
+                1,
+                2,
+                3,
+            ], "Проверьте передаваемые значения аргумента value_lst в Math"
             assert (
                 loc["math"].number == 3
             ), "Проверьте передаваемые значения аргумента number в Math"
