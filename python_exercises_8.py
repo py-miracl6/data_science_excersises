@@ -58,47 +58,6 @@ class Number:
         print(self.value_lst)
 
 
-# def test_number(data):
-#     """Тестирование Number"""
-#     # Number
-#     assert "Number" in data.keys(), "Проверьте название класса Number"
-#     assert isinstance(data["Number"].__doc__, str), "Напишите docstring для Number"
-#     # __init__
-#     assert (
-#         "__init__" in data["Number"].__dict__
-#     ), "Проверьте наличие метода __init__()"
-#     assert isinstance(
-#         data["Number"].__init__.__doc__, str
-#     ), "Напишите docstring для метода _ _ init _ _()"
-#     assert (
-#         "value_lst" in data["Number"](1).__dict__
-#     ), "Проверьте, что в _ _ init _ _() подаете value_lst"
-#     assert (
-#         len(data["Number"].__dict__["__init__"].__annotations__.keys()) == 1
-#     ), "Добавьте type hints только для value_lst в методе _ _ init _ _()"
-#     assert (
-#         data["Number"].__dict__["__init__"].__annotations__["value_lst"] == list
-#     ), "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
-#
-#     # show
-#     assert "show" in data["Number"].__dict__, "Проверьте наличие метода show()"
-#     assert isinstance(
-#         data["Number"].show.__doc__, str
-#     ), "Напишите docstring для метода show()"
-#     assert (
-#         "value" in data["Number"].__dict__["show"].__annotations__.keys()
-#     ), "Проверьте, что show() принимает параметр value, а также type hints"
-#     assert (
-#         len(data["Number"].__dict__["show"].__annotations__.keys()) == 2
-#     ), "Добавьте type hints в методе show() для value и возвращаемого значения"
-#     assert (
-#         data["Number"].__dict__["show"].__annotations__["value"] == Any
-#     ), "Проверьте тип type hints для value в методе show()"
-#     assert (
-#         data["Number"].__dict__["show"].__annotations__["return"] is None
-#     ), "Проверьте тип type hints для возвращаемого значения в методе show()"
-
-
 loc = {}
 content = st_ace(
     placeholder="Ваш код",
@@ -141,7 +100,7 @@ if content:
             ), "Проверьте, что в _ _ init _ _() подаете number"
             assert (
                 len(loc["Math"].__dict__["__init__"].__annotations__.keys()) == 2
-            ), "Добавьте type hints в методе _ _ init _ _()"
+            ), "Добавьте type hints в методе _ _ init _ _(), также проверьте, что не нужно указывать тип возвращаемого значения в инициализаторе"
             assert (
                 loc["Math"].__dict__["__init__"].__annotations__["value_lst"] == list
             ), "Проверьте тип type hints для value_lst в методе _ _ init _ _()"
