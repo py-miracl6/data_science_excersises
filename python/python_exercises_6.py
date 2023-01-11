@@ -1,28 +1,10 @@
 import streamlit as st
 from streamlit_ace import st_ace
 from typing import Any, Union, List
-import sys
-from io import StringIO
-import contextlib
+from .python_func import stdoutIO, hide_part_of_page
 
 
-@contextlib.contextmanager
-def stdoutIO(stdout=None):
-    old = sys.stdout
-    if stdout is None:
-        stdout = StringIO()
-    sys.stdout = stdout
-    yield stdout
-    sys.stdout = old
-
-
-st.set_page_config(layout="wide")
-hide_streamlit_style = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    </style>"""
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+hide_part_of_page()
 st.subheader("HW2. Блок Python. Задача 2")
 st.markdown(
     "- Создайте функцию с *неизвестным количеством неименованных аргументов* и назовите ее **adding_str_values**\n"

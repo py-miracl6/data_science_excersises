@@ -1,39 +1,9 @@
 import streamlit as st
 from streamlit_ace import st_ace
-import sys
-from io import StringIO
-import contextlib
+from .python_func import stdoutIO, hide_part_of_page
 
 
-@contextlib.contextmanager
-def stdoutIO(stdout=None):
-    old = sys.stdout
-    if stdout is None:
-        stdout = StringIO()
-    sys.stdout = stdout
-    yield stdout
-    sys.stdout = old
-
-
-# .css-fblp2m {visibility: hidden;}
-#     button {visibility: hidden;}
-#     stSidebar {visibility: hidden;}
-#     .css-1siy2j7 {visibility: hidden;}
-#
-#       section[data-testid="stSidebar"][aria-expanded="true"]{
-#         width: 1%;
-#       }
-#       section[data-testid="stSidebar"][aria-expanded="false"]{
-#         width: 1%;
-#       }
-st.set_page_config(layout="wide")
-hide_streamlit_style = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    </style>"""
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
+hide_part_of_page()
 st.subheader("HW1. Блок Python. Задача 1")
 st.markdown(
     "- Создайте переменную **x** и присвойте ей значение равное 6\n"

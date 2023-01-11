@@ -1,22 +1,10 @@
 import streamlit as st
 from streamlit_ace import st_ace
 from typing import Union
-import sys
-from io import StringIO
-import contextlib
+from .python_func import stdoutIO, hide_part_of_page
 
 
-@contextlib.contextmanager
-def stdoutIO(stdout=None):
-    old = sys.stdout
-    if stdout is None:
-        stdout = StringIO()
-    sys.stdout = stdout
-    yield stdout
-    sys.stdout = old
-
-
-st.set_page_config(layout="wide")
+hide_part_of_page()
 hide_streamlit_style = """
     <style>
     #MainMenu {visibility: hidden;}

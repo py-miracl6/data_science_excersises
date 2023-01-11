@@ -1,29 +1,10 @@
 import streamlit as st
 from streamlit_ace import st_ace
 from typing import Any, Union, List
-import sys
-from io import StringIO
-import contextlib
-import inspect
+from .python_func import stdoutIO, hide_part_of_page
 
 
-@contextlib.contextmanager
-def stdoutIO(stdout=None):
-    old = sys.stdout
-    if stdout is None:
-        stdout = StringIO()
-    sys.stdout = stdout
-    yield stdout
-    sys.stdout = old
-
-
-st.set_page_config(layout="wide")
-hide_streamlit_style = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    </style>"""
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+hide_part_of_page()
 st.subheader("HW2. Блок Python. Задача 5")
 st.markdown(
     "- Пусть класс **Number** вам уже дан со всеми атрибутами (из задания 3), заново его определять не нужно\n"
