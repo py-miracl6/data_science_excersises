@@ -1,2 +1,4 @@
 .DS_Store
 .idea/
+python/__pycache__/
+sql/__pycache__/
