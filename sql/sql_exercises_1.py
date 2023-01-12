@@ -29,7 +29,7 @@ content = st_ace(
 )
 
 if content:
-    conn = connect("../data/EmployeeSQL.db")
+    conn = connect("data/EmployeeSQL.db")
     st.markdown("### Результат")
     test_sql = """select * from dept_emp LIMIT 10"""
 
