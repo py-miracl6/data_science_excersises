@@ -34,7 +34,7 @@ content = st_ace(
 if content:
     conn = connect("data/EmployeeSQL.db")
     st.markdown("### Результат")
-    test_sql = """select e.first_name, e.last_name, e.title, e.hire_date, d.to_date\n
+    test_sql = """select e.first_name, e.last_name, e.title, e.from_date, d.to_date\n
     from employees as e\n
     inner join dept_emp as d on e.emp_no = d.emp_no\n
     where e.first_name = 'Georgi' and d.to_date = '9999-01-01'\n
