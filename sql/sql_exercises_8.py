@@ -56,7 +56,7 @@ if content:
         assert round(df["avg_salary"][0]) == 52971, "Проверьте, что скрипт написан согласно заданию"
         assert df["avg_salary"][0] == 52970.73, "Проверьте на сколько знаков после запятой вы округлили значение"
         assert df_check.equals(df), "Проверьте, что скрипт написан согласно заданию"
-        st.success("Все верно! Ключ = 88")
+        st.success("Все верно! Ключ = 01")
     except Exception as ex:
         if ("Проверьте" in str(ex)) or ("не предусмотрено" in str(ex)):
             st.error(ex)

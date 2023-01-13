@@ -6,20 +6,12 @@ from sql_func import show_tables, hide_part_of_page, check_update_db
 
 
 hide_part_of_page()
-st.subheader("HW3. Блок SQL. Задача 9")
+st.subheader("HW3. Блок SQL. Задача 10")
 st.markdown(
-    "- Вывести первые 10 строк со следующей информацией о сотрудниках:\n"
-    "   - id сотрудника - emp_no\n"
-    "   - Имя сотрудника\n"
-    "   - Фамилия сотрудника\n"
-    "   - Должность\n"
-    "   - Департамент\n"
-    "   - Зарплата (иметь в виду, что это число, а не строка)\n"
-    "   - Дата начала работы в департаменте\n"
-    "   - Дата окончания работы в департаменте\n"
-    "   - Флаг того, что человек работает в данном депаратаменте, назовите поле **flg_to_date** (если стоит дата 9999-01-01, то человек продолжает работать - ставим 1, иначе 0)\n"
-    "   - Флаг того, что его зарплата выше средней, назовите поле **flg_salary**, если 1 - выше или равна средней, иначе 0 (находили среднюю зарплату в прошлом задании, возьмите за значение число 52971)\n"
-    "- Используйте CASE\n"
+    "- Найдите **количество уникальных сотрудников** в каждом **департаменте** в разрезе **должности**\n"
+    "   - У вас должны получится следующие поля: dept_name, title, count_emp\n"
+    "- Оконные функции использовать в этом задании не нужно!\n"
+    "- Назовите поле, где будет указано кол-во уникальных сотрудников **count_emp**\n"
     "**Примечание**: вам уже даны таблицы, их импортировать не нужно, также можно выводить\n"
     "таблицу только до 80 строк при тестировании скрипта"
 )
@@ -41,14 +33,10 @@ content = st_ace(
 if content:
     conn = connect("data/EmployeeSQL.db")
     st.markdown("### Результат")
-    test_sql = """select e.emp_no, e.first_name, e.last_name, e.title, d_e.dept_name,\n
-                    s.salary, d_e.from_date, d_e.to_date,\n
-                    case when (d_e.to_date = '9999-01-01') then 1 else 0 end as flg_to_date,\n
-                    case when (s.salary >= 52971) then 1 else 0 end as flg_salary\n
-                from employees as e\n
-                left join dept_emp as d_e on e.emp_no = d_e.emp_no\n
-                left join salaries as s on d_e.emp_no = s.emp_no\n
-                limit 10"""
+    test_sql = """select d.dept_name, e.title, count(e.emp_no) as count_emp\n
+                    from employees e\n
+                    inner join dept_emp d on e.emp_no = d.emp_no\n
+                    GROUP BY d.dept_name, e.title"""
 
     try:
         check_update_db(content=content)
@@ -63,11 +51,8 @@ if content:
             "order" not in content.lower()
         ), "В задании не предусмотрена сортировка"
         assert (
-            "flg_to_date" in content.lower()
-        ), "Проверьте, что вы использовали название поля flg_to_date"
-        assert (
-            "flg_salary" in content.lower()
-        ), "Проверьте, что вы использовали название поля flg_salary"
+            "count_emp" in content.lower()
+        ), "Проверьте, что вы использовали название поля count_emp"
         assert (
             len(set(df.columns) ^ set(df_check.columns)) == 0
         ), "Проверьте, что по итогу у вас получились те же поля (колонки), что в задании"
@@ -78,7 +63,7 @@ if content:
             df.shape[0] == df_check.shape[0]
         ), "Проверьте размер таблицы, получаемый в ходе выполнения скрипта"
         assert df_check.equals(df), "Проверьте, что скрипт написан согласно заданию"
-        st.success("Все верно! Ключ = 00")
+        st.success("Все верно! Ключ = 73")
     except Exception as ex:
         if ("Проверьте" in str(ex)) or ("не предусмотрено" in str(ex)) or ("предусмотрена" in str(ex)):
             st.error(ex)
