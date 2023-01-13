@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_ace import st_ace
 from typing import Any, Union, List
 from python_func import stdoutIO, hide_part_of_page
+import inspect
 
 
 hide_part_of_page()
