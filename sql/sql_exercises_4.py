@@ -55,6 +55,7 @@ if content:
         assert list(df.columns) == list(
             df_check.columns
         ), "Проверьте последовательность названия полей как в задании"
+        assert "over" in content.lower(), "Проверьте, что вы используете оконную функцию"
         assert (
             df.shape[0] == df_check.shape[0]
         ), "Проверьте размер таблицы, получаемый в ходе выполнения скрипта"
