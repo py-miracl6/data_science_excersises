@@ -48,16 +48,22 @@ if content:
         assert (
             len(set(df.columns) ^ set(df_check.columns)) == 0
         ), "Проверьте, что по итогу у вас получились те же поля (колонки), что и указаны в задании"
-        assert list(df.columns) == list(df_check.columns), "Проверьте последовательность названия полей как в задании"
+        assert list(df.columns) == list(
+            df_check.columns
+        ), "Проверьте последовательность названия полей как в задании"
         assert (
             df.shape[0] == df_check.shape[0]
         ), "Проверьте размер таблицы, получаемый в ходе выполнения скрипта"
-        assert set(df.first_name) == {'Georgi'}, "Проверьте, что вы выгружаете сотрудников по имени Georgi"
-        assert set(df.to_date) == {'9999-01-01'}, "Проверьте, что вы выгружаете сотрудников, которые до сих пор работают в компании"
+        assert set(df.first_name) == {
+            "Georgi"
+        }, "Проверьте, что вы выгружаете сотрудников по имени Georgi"
+        assert set(df.to_date) == {
+            "9999-01-01"
+        }, "Проверьте, что вы выгружаете сотрудников, которые до сих пор работают в компании"
         assert df_check.equals(df), "Проверьте, что скрипт написан согласно заданию"
         st.success("Все верно! Ключ = 435")
     except Exception as ex:
-        if ("Проверьте" in str(ex)) or ('не предусмотрено' in str(ex)):
+        if ("Проверьте" in str(ex)) or ("не предусмотрено" in str(ex)):
             st.error(ex)
         else:
             st.error(

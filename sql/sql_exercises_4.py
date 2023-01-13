@@ -54,15 +54,17 @@ if content:
         assert (
             len(set(df.columns) ^ set(df_check.columns)) == 0
         ), "Проверьте, что по итогу у вас получились те же поля (колонки), что и указаны в задании"
-        assert list(df.columns) == list(df_check.columns), "Проверьте последовательность названия полей как в задании"
+        assert list(df.columns) == list(
+            df_check.columns
+        ), "Проверьте последовательность названия полей как в задании"
         assert (
             df.shape[0] == df_check.shape[0]
         ), "Проверьте размер таблицы, получаемый в ходе выполнения скрипта"
         assert df_check.equals(df), "Проверьте, что скрипт написан согласно заданию"
-        assert 'dense' in content.lower(), "Проверьте тип оконной функции"
+        assert "dense" in content.lower(), "Проверьте тип оконной функции"
         st.success("Все верно! Ключ = 76")
     except Exception as ex:
-        if ("Проверьте" in str(ex)) or ('не предусмотрено' in str(ex)):
+        if ("Проверьте" in str(ex)) or ("не предусмотрено" in str(ex)):
             st.error(ex)
         else:
             st.error(

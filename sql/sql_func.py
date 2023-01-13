@@ -39,7 +39,15 @@ def hide_part_of_page():
 
 
 def check_update_db(content):
-    assert 'create' not in content.lower(), "В данном функционале не предусмотрено изменение и создание таблиц"
-    assert 'alter' not in content.lower(), "В данном функционале не предусмотрено изменение и создание таблиц"
-    assert 'delete' not in content.lower(), "В данном функционале не предусмотрено изменение и создание таблиц"
-    assert 'update' not in content.lower(), "В данном функционале не предусмотрено изменение и создание таблиц"
+    assert (
+        "create" not in content.lower()
+    ), "В данном функционале не предусмотрено изменение и создание таблиц"
+    assert (
+        "alter" not in content.lower()
+    ), "В данном функционале не предусмотрено изменение и создание таблиц"
+    assert (
+        "delete" not in content.lower()
+    ), "В данном функционале не предусмотрено изменение и создание таблиц"
+    assert (
+        "update" not in content.lower()
+    ), "В данном функционале не предусмотрено изменение и создание таблиц"

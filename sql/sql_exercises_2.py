@@ -49,7 +49,7 @@ if content:
         assert df_check.equals(df), "Проверьте, что скрипт написан согласно заданию"
         st.success("Все верно! Ключ = 131")
     except Exception as ex:
-        if ("Проверьте" in str(ex)) or ('не предусмотрено' in str(ex)):
+        if ("Проверьте" in str(ex)) or ("не предусмотрено" in str(ex)):
             st.error(ex)
         else:
             st.error(

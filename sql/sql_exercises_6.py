@@ -52,16 +52,19 @@ if content:
         assert (
             "max_salary" in content.lower()
         ), "Проверьте, что название поля с MAX зарплатой - max_salary"
-        assert 'limit' in content.lower(), "Проверьте, что вы используете LIMIT"
+        assert "limit" in content.lower(), "Проверьте, что вы используете LIMIT"
         assert (
             len(set(df.columns) ^ set(df_check.columns)) == 0
         ), "Проверьте, что по итогу у вас получились те же поля (колонки), что в задании"
         assert list(df.columns) == list(
             df_check.columns
         ), "Проверьте последовательность названия полей как в задании"
-        assert "dept_manager" in content.lower(), "Проверьте, что вы используете таблицу dept_manager для поиска максимальной зарплаты"
         assert (
-            ("inner join" in content.lower()) and ("from salaries" in content.lower())
+            "dept_manager" in content.lower()
+        ), "Проверьте, что вы используете таблицу dept_manager для поиска максимальной зарплаты"
+        assert (
+            ("inner join" in content.lower())
+            and ("from salaries" in content.lower())
             or ("from dept_manager" in content.lower())
         ), "Проверьте, что вы находите зарплату только среди менеджеров. Подсказка: проблема в типе JOIN"
         assert (

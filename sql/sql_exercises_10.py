@@ -3,6 +3,7 @@ from streamlit_ace import st_ace
 from sqlite3 import connect
 import pandas as pd
 from sql_func import show_tables, hide_part_of_page, check_update_db
+import re
 
 
 hide_part_of_page()
@@ -47,9 +48,13 @@ if content:
         assert (
             "over" not in content.lower()
         ), "Проверьте, что вы не используете в запросе оконные функции"
+        assert "order" not in content.lower(), "В задании не предусмотрена сортировка"
         assert (
-            "order" not in content.lower()
-        ), "В задании не предусмотрена сортировка"
+            "employees" in content.lower()
+        ), "Проверьте, что вы используете таблицу employees для подсчета кол-ва уникальных сотрудников в разрезе департаментов"
+        assert (
+            "dept_emp" in content.lower()
+        ), "Проверьте, что вы используете таблицу dept_emp для подсчета кол-ва уникальных сотрудников в разрезе департаментов"
         assert (
             "count_emp" in content.lower()
         ), "Проверьте, что вы использовали название поля count_emp"
@@ -65,7 +70,11 @@ if content:
         assert df_check.equals(df), "Проверьте, что скрипт написан согласно заданию"
         st.success("Все верно! Ключ = 73")
     except Exception as ex:
-        if ("Проверьте" in str(ex)) or ("не предусмотрено" in str(ex)) or ("предусмотрена" in str(ex)):
+        if (
+            ("Проверьте" in str(ex))
+            or ("не предусмотрено" in str(ex))
+            or ("предусмотрена" in str(ex))
+        ):
             st.error(ex)
         else:
             st.error(
