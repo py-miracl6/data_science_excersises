@@ -2,3 +2,4 @@
 .idea/
 python/__pycache__/
 sql/__pycache__/
+numpy_ex/__pycache__/
