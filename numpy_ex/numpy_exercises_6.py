@@ -87,7 +87,7 @@ if content:
             # assert np.allclose(
             #     loc["check_2"], check_1_check
             # ), "Проверьте, верно ли вы умножили нулевой вектор на собственное значение под 0-ым индексом (проблема в индексах)"
-            st.success("Все верно! Ключ = 17")
+            st.success("Все верно! Ключ = 19")
         except Exception as ex:
             st.error(ex)
     except Exception as ex:
