@@ -31,7 +31,7 @@ if content:
     value_1_check = value_check[1:4]
     value_2_check = value_check[-1]
     value_3_check = value_check[-2:]
-    value_4_check = value_check[::]
+    value_4_check = value_check[::-1]
 
     try:
         with stdoutIO() as s:
