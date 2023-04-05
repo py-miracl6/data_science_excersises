@@ -48,6 +48,7 @@ if content:
             assert "key3" in list(
                 loc["value"].keys()
             ), "Проверьте, что вы добавили в словарь ключ 'key3'"
+            assert isinstance(loc["value"]["key3"], int), "Проверьте, что вы добавили значение для ключа 'key3' типа int"
             st.success("Все верно! Ключ = 48")
         except Exception as ex:
             st.error(ex)
