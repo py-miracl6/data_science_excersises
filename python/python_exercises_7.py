@@ -17,7 +17,7 @@ st.markdown(
     "- В качестве аргумента подайте список [1, 2, 3]\n"
     "- Далее вызовите метод **show** экземпляра класса **result**\n"
     "- Не забывайте про **DOCSTRING**, а также **TYPE HINTS**\n"
-    "\n**Пример кода и вывода:**", unsafe_allow_html=True,
+    "\n**Пример определения экземпляра класса и получения результата:**", unsafe_allow_html=True,
 )
 st.code("result = Number(value_lst = [1, 2, 3])\n" "result.show()", language="python")
 
