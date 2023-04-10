@@ -105,7 +105,7 @@ if content:
             ), "Проверьте, что метод multi() не принимает параметров (кроме self), а также type hints для возвращаемого значения"
             assert (
                 loc["Math"].__dict__["multi"].__annotations__["return"]
-                == Union[list, None]
+                == Union[None, list]
             ), "Проверьте тип type hints для возвращаемого значения в методе multi() (подсказка Union[None, ....])"
 
             # result
