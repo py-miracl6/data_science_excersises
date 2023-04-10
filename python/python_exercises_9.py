@@ -145,8 +145,7 @@ if content:
                 len(loc["Math"].__dict__["average"].__annotations__.keys()) == 1
             ), "Проверьте, что метод average() не принимает параметров (кроме self), а также type hints для возвращаемого значения"
             assert (
-                loc["Math"].__dict__["average"].__annotations__["return"]
-                == Union[float, None]
+                loc["Math"].__dict__["average"].__annotations__["return"] in [Union[float, None], Union[None, float]]
             ), "Проверьте тип type hints для возвращаемого значения в методе average() (подсказка Union[..., ...])"
 
             # result
