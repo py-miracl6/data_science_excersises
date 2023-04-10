@@ -130,9 +130,8 @@ if content:
                 List[Any],
             ], "Проверьте тип type hints для value в методе _summation()"
             assert (
-                loc["Math"]._summation.__annotations__["return"]
-                == Union[int, float, None]
-            ), "Проверьте тип type hints для возвращаемого значения в методе _summation() (подсказка Union[..., ..., ...])"
+                loc["Math"]._summation.__annotations__["return"] in [Union[int, float, None], Union[float, int, None]]
+            ), "Проверьте тип type hints для возвращаемого значения в методе _summation() (подсказка Union[..., ..., None])"
 
             # average
             assert (
