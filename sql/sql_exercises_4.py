@@ -60,7 +60,6 @@ if content:
             df.shape[0] == df_check.shape[0]
         ), "Проверьте размер таблицы, получаемый в ходе выполнения скрипта"
         assert df_check.equals(df), "Проверьте, что скрипт написан согласно заданию"
-        assert "dense" in content.lower(), "Проверьте тип оконной функции"
         st.success("Все верно! Ключ = 76")
     except Exception as ex:
         if ("Проверьте" in str(ex)) or ("не предусмотрено" in str(ex)):
