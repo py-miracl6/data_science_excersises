@@ -20,5 +20,7 @@ def hide_part_of_page():
         <style>
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
+        header {visibility: hidden;}
+        stActionButton {visibility: hidden;}
         </style>"""
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
