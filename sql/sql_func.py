@@ -3,7 +3,7 @@ import pandas as pd
 from sqlite3 import connect
 
 
-def show_tables(url_db: str = "../data/EmployeeSQL.db"):
+def show_tables(url_db: str = "data/EmployeeSQL.db"):
     col1, col2, col3, col4 = st.columns(4)
     conn = connect(url_db)
 
