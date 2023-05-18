@@ -3,7 +3,7 @@ import pandas as pd
 from sqlite3 import connect
 
 
-def show_tables(url_db: str = "data/EmployeeSQL.db"):
+def show_tables(url_db: str = "../data/EmployeeSQL.db"):
     col1, col2, col3, col4 = st.columns(4)
     conn = connect(url_db)
 
@@ -29,13 +29,17 @@ def show_tables(url_db: str = "data/EmployeeSQL.db"):
 
 
 def hide_part_of_page():
-    st.set_page_config(layout="wide")
+    st.set_page_config(layout="wide", initial_sidebar_state="collapsed")
     hide_streamlit_style = """
         <style>
         #MainMenu {visibility: hidden;}
+        [data-testid="collapsedControl"] {
+        display: none
+        }
+        [kind="header"] {visibility: hidden;}
+        [data-testid="stHeader"] {visibility: hidden;}
         footer {visibility: hidden;}
         header {visibility: hidden;}
-        stActionButton {visibility: hidden;}
         </style>"""
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
