@@ -28,10 +28,16 @@ def stdoutIO(stdout=None):
 #       }
 st.set_page_config(layout="wide")
 hide_streamlit_style = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    </style>"""
+        <style>
+        #MainMenu {visibility: hidden;}
+        [data-testid="collapsedControl"] {
+        display: none
+        }
+        [kind="header"] {visibility: hidden;}
+        [data-testid="stHeader"] {visibility: hidden;}
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
+        </style>"""
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 st.subheader("HW1. Блок Python. Задача 0")
