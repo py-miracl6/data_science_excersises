@@ -2,7 +2,8 @@ import streamlit as st
 from streamlit_ace import st_ace
 from sqlite3 import connect
 import pandas as pd
-from sql_func import show_tables, hide_part_of_page, check_update_db
+from sql_func import show_tables, hide_part_of_page, check_update_db, init_logging
+import logging
 
 
 hide_part_of_page()
@@ -37,6 +38,7 @@ content = st_ace(
 )
 
 if content:
+    init_logging()
     conn = connect("data/EmployeeSQL.db")
     st.markdown("### Результат")
     test_sql = """select e.emp_no, e.first_name, e.last_name, e.title, d_e.dept_name,\n
@@ -47,9 +49,10 @@ if content:
                 left join dept_emp as d_e on e.emp_no = d_e.emp_no\n
                 left join salaries as s on d_e.emp_no = s.emp_no\n
                 limit 10"""
-
+    logger = logging.getLogger("foobar")
     try:
         check_update_db(content=content)
+        logger.info(f"Start write query: {content}")
         df = pd.read_sql(content, conn)[:80]
         st.dataframe(df)
         df_check = pd.read_sql(test_sql, conn)
