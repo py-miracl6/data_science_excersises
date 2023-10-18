@@ -2,7 +2,8 @@ import streamlit as st
 from streamlit_ace import st_ace
 from sqlite3 import connect
 import pandas as pd
-from sql_func import show_tables, hide_part_of_page, check_update_db
+from sql_func import show_tables, hide_part_of_page, check_update_db, init_logging
+import logging
 
 
 hide_part_of_page()
@@ -30,6 +31,7 @@ content = st_ace(
 )
 
 if content:
+    init_logging()
     conn = connect("data/EmployeeSQL.db")
     st.markdown("### Результат")
     test_sql = """select d.emp_no, s.salary as max_salary\n
@@ -37,9 +39,10 @@ if content:
                     inner join salaries s on d.emp_no = s.emp_no\n
                     order by salary desc\n
                     limit 1, 1"""
-
+    logger = logging.getLogger("foobar")
     try:
         check_update_db(content=content)
+        logger.info(f"Start write query: {content}")
         df = pd.read_sql(content, conn)[:80]
         st.dataframe(df)
         df_check = pd.read_sql(test_sql, conn)
