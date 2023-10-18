@@ -7,32 +7,28 @@ import logging
 from streamlit import runtime
 from streamlit.runtime.scriptrunner import get_script_run_ctx
 
+
 def get_remote_ip() -> str:
     """Get remote ip."""
-
     try:
         ctx = get_script_run_ctx()
         if ctx is None:
             return None
-
         session_info = runtime.get_instance().get_client(ctx.session_id)
         if session_info is None:
             return None
     except Exception as e:
         return None
-
     return session_info.request.remote_ip
+
 
 class ContextFilter(logging.Filter):
     def filter(self, record):
         record.user_ip = get_remote_ip()
         return super().filter(record)
 
-def init_logging():
-    # Make sure to instanciate the logger only once
-    # otherwise, it will create a StreamHandler at every run
-    # and duplicate the messages
 
+def init_logging():
     # create a custom logger
     logger = logging.getLogger("foobar")
     if logger.handlers:  # logger is already setup, don't setup again
@@ -46,7 +42,6 @@ def init_logging():
     handler.addFilter(ContextFilter())
     handler.setFormatter(formatter)
     logger.addHandler(handler)
-
 
 hide_part_of_page()
 
@@ -79,7 +74,7 @@ if content:
     logger = logging.getLogger("foobar")
     try:
         check_update_db(content=content)
-        logger.info("Start write query: {content}")
+        logger.info(f"Start write query: {content}")
         df = pd.read_sql(content, conn)[:80]
         st.dataframe(df)
         df_check = pd.read_sql(test_sql, conn)
