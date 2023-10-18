@@ -76,13 +76,13 @@ if content:
     conn = connect("data/EmployeeSQL.db")
     st.markdown("### Результат")
     test_sql = """select * from dept_emp LIMIT 10"""
+    logger = logging.getLogger("foobar")
     try:
         check_update_db(content=content)
         logger.info("Start write query: {content}")
         df = pd.read_sql(content, conn)[:80]
         st.dataframe(df)
         df_check = pd.read_sql(test_sql, conn)
-        logger = logging.getLogger("foobar")
         assert (
             len(set(df.columns) ^ set(df_check.columns)) == 0
         ), "Проверьте название таблицы"
