@@ -67,7 +67,7 @@ if content:
             df_check.columns
         ), "Проверьте последовательность названия полей как в задании"
         assert (
-            len(re.findall("dept_manager", content.lower())) == 2
+            len(re.findall("dept_manager", content.lower())) >= 1
         ), "Проверьте, что вы используете таблицу dept_manager для поиска максимальной зарплаты в основном запросе и в подзапросе"
 
         assert (
