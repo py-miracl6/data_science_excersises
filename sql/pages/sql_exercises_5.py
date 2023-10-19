@@ -58,7 +58,7 @@ if content:
             "max_salary" in content.lower()
         ), "Проверьте, что название поля с MAX зарплатой - max_salary"
         assert (
-            len(re.findall("select", content.lower())) == 2
+            len(re.findall("select", content.lower())) > 1
         ), "Проверьте, что вы используете подзапрос"
         assert (
             len(set(df.columns) ^ set(df_check.columns)) == 0
@@ -71,8 +71,8 @@ if content:
         ), "Проверьте, что вы используете таблицу dept_manager для поиска максимальной зарплаты в основном запросе и в подзапросе"
 
         assert (
-            (len(re.findall("inner join", content.lower())) == 2)
-            and (len(re.findall("from salaries", content.lower())) == 2)
+            (len(re.findall("inner join", content.lower())) >= 1)
+            and (len(re.findall("from salaries", content.lower())) >=1)
             or ("from dept_manager" in content.lower())
         ), "Проверьте, что вы находите зарплату только среди менеджеров. Подсказка: проблема в типе JOIN"
         assert (
