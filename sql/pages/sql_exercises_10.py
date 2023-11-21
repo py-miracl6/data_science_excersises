@@ -76,7 +76,7 @@ if content:
         assert (
             df.shape[0] == df_check.shape[0]
         ) , "Проверьте размер таблицы, получаемый в ходе выполнения скрипта"
-        assert df_check.equals(df) or df_check2.equals(df), "Проверьте, что скрипт написан согласно заданию"
+        assert (df_check.equals(df)) or (df_check2.equals(df)), "Проверьте, что скрипт написан согласно заданию"
         st.success("Все верно! Ключ = 73")
     except Exception as ex:
         if (
