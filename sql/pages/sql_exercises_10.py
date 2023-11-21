@@ -38,6 +38,10 @@ if content:
                     from employees e\n
                     inner join dept_emp d on e.emp_no = d.emp_no\n
                     GROUP BY d.dept_name, e.title"""
+    test_sql_2 = """select d.dept_name, e.title, count(e.emp_no) as count_emp\n
+                    from employees e\n
+                    inner join dept_emp d on e.emp_no = d.emp_no\n
+                    GROUP BY e.title, d.dept_name"""
     logger = logging.getLogger("foobar")
     try:
         check_update_db(content=content)
@@ -45,6 +49,7 @@ if content:
         df = pd.read_sql(content, conn)[:80]
         st.dataframe(df)
         df_check = pd.read_sql(test_sql, conn)
+        df_check2 = pd.read_sql(test_sql_2, conn)
 
         assert (
             "over" not in content.lower()
@@ -70,8 +75,8 @@ if content:
         ), "Проверьте, что вы группируете по полям департамент и название должности"
         assert (
             df.shape[0] == df_check.shape[0]
-        ), "Проверьте размер таблицы, получаемый в ходе выполнения скрипта"
-        assert df_check.equals(df), "Проверьте, что скрипт написан согласно заданию"
+        ) , "Проверьте размер таблицы, получаемый в ходе выполнения скрипта"
+        assert df_check.equals(df) or df_check2.equals(df), "Проверьте, что скрипт написан согласно заданию"
         st.success("Все верно! Ключ = 73")
     except Exception as ex:
         if (
