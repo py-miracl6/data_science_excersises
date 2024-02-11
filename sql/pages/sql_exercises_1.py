@@ -41,7 +41,7 @@ try:
             logger.info(f"Start write query: {content}")
             df = pd.read_sql(content, conn)[:80]
             st.dataframe(df)
-            df_check = pd.read_sql(test_sql, conn)
+            df_check = pd.read_sql(content, conn)
             assert (
                 len(set(df.columns) ^ set(df_check.columns)) == 0
             ), "Проверьте название таблицы"
