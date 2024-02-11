@@ -49,7 +49,7 @@ def hide_part_of_page():
 
 def check_update_db(content):
     assert (
-        len(content.lower().split('from ')[1].split('where')[0].split('join')[0].split(',')) > 1
+        len(content.lower().split('from ')[1].split('where')[0].split('join')[0].split(',')) <= 1
     ), "В FROM не может быть указано две таблицы"
     assert (
         "create" not in content.lower()
